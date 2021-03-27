@@ -1,17 +1,7 @@
-buildscript {
-    repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
-    }
-}
+
 plugins {
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
-apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
@@ -68,6 +58,11 @@ dependencies {
 shadowJar {
     classifier = ''
     configurations = [project.configurations.shade]
+    dependencies {
+        exclude(dependency {
+            it.moduleGroup != 'com.example.utilities'
+        })
+    }
 
 jar {
     manifest {
